@@ -1,0 +1,43 @@
+		<form action="/" method="POST" id="predict">
+		<textarea class="form-control" name="message" rows="4" cols="50" placeholder="Masukkan teks dikolom ini"></textarea>
+		<br/>
+		<button type="submit" class="btn btn-primary">predict</button>
+		
+	</form>
+	<hr/>
+	<div class="results">
+
+	<dl class="row">
+  <dt class="col-sm-2"><h4>Kategori :</h4></dt>
+  <dd class="col-sm-9"><h4></h4>
+  </dd>
+</dl>
+	</div>
+	{% if msg is not defined %}
+{% set msg = None %}
+{% endif %}
+    <script type="text/javascript" charset="utf-8">
+$(document).ready(function() {
+		msg = {{msg|tojson}}
+		console.log(msg);
+		$('form').submit(function(event) {
+		if($( 'dt.col-sm-2 h4' ).length > 0 || $( 'dd.col-sm-9' ).length > 0){
+			$( 'dt.col-sm-2' ).empty()
+			$( 'dd.col-sm-9' ).empty()
+		}
+		$( 'dt.col-sm-2' ).append('<h4>Loading...</h4>')
+	});
+		if(msg === null){
+			return [];
+		}
+	if( msg.length > 0 ) {
+		$( 'dd.col-sm-9 h4' ).append(
+				"<i class='text-success'>"+msg+"</i>,"
+			)
+	}else{
+		$( 'dd.col-sm-9 h4' ).append(
+			"<i class='text-danger'>tidak dapat diklasifikasikan</i>,"
+		)
+	}
+});
+    </script>
